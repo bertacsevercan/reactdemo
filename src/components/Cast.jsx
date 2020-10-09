@@ -1,12 +1,18 @@
 import React from 'react';
-import { Thumbnail } from 'react-bootstrap/lib';
+import { Thumbnail, Image } from 'react-bootstrap/lib';
 import { URL_IMG, IMG_SIZE_SMALL } from '../const';
 
 export default function Cast({cast}) {
+  const print = () =>{ // was an onClick in p tag
+    console.log(URL_IMG+IMG_SIZE_SMALL+cast.profile_path)
+  }
+
   return (
-    <Thumbnail src={URL_IMG+IMG_SIZE_SMALL+cast.profile_path} alt={cast.name} >
+    <div>
+    <Image  src={URL_IMG+IMG_SIZE_SMALL+cast.profile_path}  rounded alt={cast.name}  />
       <p>{cast.name}</p>
-    </Thumbnail>
+    </div>
+    
   );
 }
 

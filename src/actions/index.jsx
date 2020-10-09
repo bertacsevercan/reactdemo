@@ -18,6 +18,9 @@ export const FETCH_CASTS_FAILURE = 'FETCH_CASTS_FAILURE';
 export const FETCH_TRAILERS = 'FETCH_TRAILERS';
 export const FETCH_TRAILERS_SUCCESS = 'FETCH_TRAILERS_SUCCESS';
 export const FETCH_TRAILERS_FAILURE = 'FETCH_TRAILERS_FAILURE';
+export const FETCH_RELATED_MOVIES = "FETCH_RELATED_MOVIES";
+export const FETCH_RELATED_MOVIES_SUCCESS = "FETCH_RELATED_MOVIES_SUCCESS";
+export const FETCH_RELATED_MOVIES_FAILURE = "FETCH_RELATED_MOVIES_FAILURE";
 
 function searchMovie(searchText) {
   return {
@@ -135,6 +138,24 @@ function fetchTrailersFail(error) {
   };
 }
 
+function fetchRelatedMovies() {
+  return {
+    type: FETCH_RELATED_MOVIES
+  }
+}
+function fetchRelatedMoviesSuccess(data) {
+  return {
+    type: FETCH_RELATED_MOVIES_SUCCESS,
+    data
+  }
+}
+function fetchRelatedMoviesFailure(error) {
+  return {
+    type: FETCH_RELATED_MOVIES,
+    error
+  }
+}
+
 export function searchMovieList(keyword){
   let url = URL_SEARCH + keyword + API_KEY_ALT;
   return function(dispatch){
@@ -208,5 +229,18 @@ export function fetchTrailerList(id){
         });
         dispatch(fetchTrailersSuccess(youtubeTrailers));
       }).catch(error => dispatch(fetchTrailersFail(error)))
+  }
+}
+
+export function fetchRelatedMoviesList(id){
+  const relateds_path = "/similar"
+  const url_relateds = URL_DETAIL + id + relateds_path + API_KEY;
+  return function(dispatch){
+    dispatch(fetchRelatedMovies())
+    return fetch(url_relateds)
+    .then(response => response.json())
+    .then(json => json.results)
+    .then(data => dispatch(fetchRelatedMoviesSuccess(data)))
+    .catch(error => dispatch(fetchRelatedMoviesFailure(error)))
   }
 }

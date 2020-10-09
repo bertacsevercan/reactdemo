@@ -3,6 +3,7 @@ import Trailer from './Trailer'
 import { Col } from 'react-bootstrap'
 
 export default function TrailerList({data}) {
+
     let trailers = data.map(function(trailer) {
       return(
         <Col xs={12} sm={6} md={4} key={trailer.id} >
@@ -12,12 +13,17 @@ export default function TrailerList({data}) {
     });
 
     const style = {
-      marginTop: '15px'
+      marginTop: '15px',
+      display: "flex",
+      justifyContent: "space-between"
     };
 
     const titleStyle = {
+      marginTop: "15px",
       paddingLeft: '20px'
     };
+
+
 
     if (trailers.length !== 0){
       return(
